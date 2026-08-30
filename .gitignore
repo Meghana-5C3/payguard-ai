@@ -27,3 +27,6 @@ frontend/dist/
 # OS
 .DS_Store
 Thumbs.db
+
+# Large dataset
+backend/data/public_fraud_dataset.csv/

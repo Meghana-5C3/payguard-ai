@@ -6,37 +6,24 @@ __pycache__/
 # Virtual environment
 backend_venv/
 venv/
-.venv/
-
-# Environment/secrets
 .env
 .env.*
-!.env.example
 
 # Database
 *.db
 *.sqlite
 *.sqlite3
 
-# Python cache
-.pytest_cache/
-.mypy_cache/
+# Test/evaluation artifacts
+**/raw_test_probs.npy
+**/raw_val_probs.npy
+**/y_test.npy
+**/y_val.npy
 
 # Node
-frontend/node_modules/
+node_modules/
 frontend/dist/
-
-# Logs
-*.log
 
 # OS
 .DS_Store
 Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-
-# Temporary files
-*.tmp
-*.temp

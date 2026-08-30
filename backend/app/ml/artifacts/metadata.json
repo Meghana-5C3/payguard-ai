@@ -1,0 +1,507 @@
+{
+  "model_version": "v1.0.0",
+  "feature_version": "v1.0",
+  "dataset_source": "synthetic",
+  "dataset_type": "Synthetic benchmark \u2014 generated dataset",
+  "dataset_size": 25000,
+  "fraud_count": 1178,
+  "fraud_rate": 0.0471,
+  "dataset_version": "v1.0",
+  "training_timestamp": "2026-08-26T13:08:34.259418+00:00",
+  "random_seed": 42,
+  "feature_names": [
+    "amount",
+    "tx_amount_zscore",
+    "tx_velocity_1h",
+    "tx_velocity_24h",
+    "tx_amount_sum_24h",
+    "is_new_device",
+    "is_cross_border",
+    "time_since_last_tx_sec",
+    "distance_from_home_km",
+    "mcc_risk_tier",
+    "ip_reputation_score",
+    "failed_otp_attempts_24h"
+  ],
+  "n_train": 17500,
+  "n_val": 3750,
+  "n_test": 3750,
+  "training_sample_count": 17500,
+  "validation_sample_count": 3750,
+  "test_sample_count": 3750,
+  "fraud_prevalence": 0.0471,
+  "model_type": "XGBoost + Isotonic Calibration",
+  "calibration_method": "isotonic",
+  "roc_auc": 0.8357,
+  "pr_auc": 0.2483,
+  "brier_score_raw": 0.11331632918467059,
+  "brier_score_calibrated": 0.0392,
+  "ece_raw": 0.22358109457095465,
+  "ece_calibrated": 0.0053,
+  "precision": 0.4231,
+  "recall": 0.0625,
+  "f1_score": 0.1089,
+  "confusion_matrix": {
+    "true_negatives": 3559,
+    "false_positives": 15,
+    "false_negatives": 165,
+    "true_positives": 11
+  },
+  "calibration_curve": [
+    {
+      "bin_lower": 0.0,
+      "bin_upper": 0.1,
+      "count": 3287,
+      "actual_rate": 0.0231,
+      "predicted_prob": 0.0252
+    },
+    {
+      "bin_lower": 0.1,
+      "bin_upper": 0.2,
+      "count": 257,
+      "actual_rate": 0.1284,
+      "predicted_prob": 0.1319
+    },
+    {
+      "bin_lower": 0.2,
+      "bin_upper": 0.3,
+      "count": 121,
+      "actual_rate": 0.2397,
+      "predicted_prob": 0.2163
+    },
+    {
+      "bin_lower": 0.3,
+      "bin_upper": 0.4,
+      "count": 15,
+      "actual_rate": 0.4,
+      "predicted_prob": 0.3024
+    },
+    {
+      "bin_lower": 0.4,
+      "bin_upper": 0.5,
+      "count": 44,
+      "actual_rate": 0.4773,
+      "predicted_prob": 0.4206
+    },
+    {
+      "bin_lower": 0.6,
+      "bin_upper": 0.7,
+      "count": 24,
+      "actual_rate": 0.4583,
+      "predicted_prob": 0.6
+    },
+    {
+      "bin_lower": 0.9,
+      "bin_upper": 1.0,
+      "count": 2,
+      "actual_rate": 0.0,
+      "predicted_prob": 0.9522
+    }
+  ],
+  "precision_recall_curve": [
+    {
+      "precision": 0.0469,
+      "recall": 1.0
+    },
+    {
+      "precision": 0.0476,
+      "recall": 0.9943
+    },
+    {
+      "precision": 0.0476,
+      "recall": 0.9943
+    },
+    {
+      "precision": 0.0476,
+      "recall": 0.9943
+    },
+    {
+      "precision": 0.0625,
+      "recall": 0.9602
+    },
+    {
+      "precision": 0.0818,
+      "recall": 0.9261
+    },
+    {
+      "precision": 0.0819,
+      "recall": 0.9261
+    },
+    {
+      "precision": 0.0819,
+      "recall": 0.9261
+    },
+    {
+      "precision": 0.0893,
+      "recall": 0.892
+    },
+    {
+      "precision": 0.0894,
+      "recall": 0.892
+    },
+    {
+      "precision": 0.0894,
+      "recall": 0.892
+    },
+    {
+      "precision": 0.0895,
+      "recall": 0.892
+    },
+    {
+      "precision": 0.0895,
+      "recall": 0.892
+    },
+    {
+      "precision": 0.0896,
+      "recall": 0.892
+    },
+    {
+      "precision": 0.091,
+      "recall": 0.8864
+    },
+    {
+      "precision": 0.1071,
+      "recall": 0.8523
+    },
+    {
+      "precision": 0.1071,
+      "recall": 0.8523
+    },
+    {
+      "precision": 0.1206,
+      "recall": 0.8182
+    },
+    {
+      "precision": 0.1301,
+      "recall": 0.8011
+    },
+    {
+      "precision": 0.1486,
+      "recall": 0.7159
+    },
+    {
+      "precision": 0.1625,
+      "recall": 0.6705
+    },
+    {
+      "precision": 0.1628,
+      "recall": 0.6705
+    },
+    {
+      "precision": 0.163,
+      "recall": 0.6705
+    },
+    {
+      "precision": 0.2058,
+      "recall": 0.5682
+    },
+    {
+      "precision": 0.2062,
+      "recall": 0.5682
+    },
+    {
+      "precision": 0.2066,
+      "recall": 0.5682
+    },
+    {
+      "precision": 0.207,
+      "recall": 0.5682
+    },
+    {
+      "precision": 0.216,
+      "recall": 0.5682
+    },
+    {
+      "precision": 0.3221,
+      "recall": 0.3807
+    },
+    {
+      "precision": 0.3237,
+      "recall": 0.3807
+    },
+    {
+      "precision": 0.3252,
+      "recall": 0.3807
+    },
+    {
+      "precision": 0.3846,
+      "recall": 0.3125
+    },
+    {
+      "precision": 0.4471,
+      "recall": 0.2159
+    },
+    {
+      "precision": 0.4444,
+      "recall": 0.1818
+    },
+    {
+      "precision": 0.4507,
+      "recall": 0.1818
+    },
+    {
+      "precision": 0.4571,
+      "recall": 0.1818
+    },
+    {
+      "precision": 0.4638,
+      "recall": 0.1818
+    },
+    {
+      "precision": 0.4706,
+      "recall": 0.1818
+    },
+    {
+      "precision": 0.4231,
+      "recall": 0.0625
+    },
+    {
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    {
+      "precision": 1.0,
+      "recall": 0.0
+    }
+  ],
+  "roc_curve": [
+    {
+      "fpr": 0.0,
+      "tpr": 0.0
+    },
+    {
+      "fpr": 0.0003,
+      "tpr": 0.0
+    },
+    {
+      "fpr": 0.0006,
+      "tpr": 0.0
+    },
+    {
+      "fpr": 0.0042,
+      "tpr": 0.0625
+    },
+    {
+      "fpr": 0.0101,
+      "tpr": 0.1818
+    },
+    {
+      "fpr": 0.0112,
+      "tpr": 0.1818
+    },
+    {
+      "fpr": 0.0132,
+      "tpr": 0.2159
+    },
+    {
+      "fpr": 0.0246,
+      "tpr": 0.3125
+    },
+    {
+      "fpr": 0.0389,
+      "tpr": 0.3807
+    },
+    {
+      "fpr": 0.0395,
+      "tpr": 0.3807
+    },
+    {
+      "fpr": 0.1016,
+      "tpr": 0.5682
+    },
+    {
+      "fpr": 0.1072,
+      "tpr": 0.5682
+    },
+    {
+      "fpr": 0.108,
+      "tpr": 0.5682
+    },
+    {
+      "fpr": 0.1696,
+      "tpr": 0.6705
+    },
+    {
+      "fpr": 0.1701,
+      "tpr": 0.6705
+    },
+    {
+      "fpr": 0.202,
+      "tpr": 0.7159
+    },
+    {
+      "fpr": 0.2639,
+      "tpr": 0.8011
+    },
+    {
+      "fpr": 0.2938,
+      "tpr": 0.8182
+    },
+    {
+      "fpr": 0.3497,
+      "tpr": 0.8523
+    },
+    {
+      "fpr": 0.35,
+      "tpr": 0.8523
+    },
+    {
+      "fpr": 0.4362,
+      "tpr": 0.8864
+    },
+    {
+      "fpr": 0.4466,
+      "tpr": 0.892
+    },
+    {
+      "fpr": 0.448,
+      "tpr": 0.892
+    },
+    {
+      "fpr": 0.5112,
+      "tpr": 0.9261
+    },
+    {
+      "fpr": 0.5118,
+      "tpr": 0.9261
+    },
+    {
+      "fpr": 0.709,
+      "tpr": 0.9602
+    },
+    {
+      "fpr": 0.9787,
+      "tpr": 0.9943
+    },
+    {
+      "fpr": 0.9793,
+      "tpr": 0.9943
+    },
+    {
+      "fpr": 1.0,
+      "tpr": 1.0
+    }
+  ],
+  "global_feature_importance": [
+    {
+      "feature": "is_new_device",
+      "label": "Unrecognized Device Fingerprint",
+      "importance": 0.2071
+    },
+    {
+      "feature": "mcc_risk_tier",
+      "label": "Merchant Risk Tier (1-5)",
+      "importance": 0.1762
+    },
+    {
+      "feature": "failed_otp_attempts_24h",
+      "label": "Failed OTP Attempts (24h)",
+      "importance": 0.1663
+    },
+    {
+      "feature": "tx_velocity_1h",
+      "label": "1-Hour Velocity Count",
+      "importance": 0.0983
+    },
+    {
+      "feature": "is_cross_border",
+      "label": "Cross-Border Transaction",
+      "importance": 0.0696
+    },
+    {
+      "feature": "ip_reputation_score",
+      "label": "IP Anonymity / Risk Score (0-100)",
+      "importance": 0.0621
+    },
+    {
+      "feature": "tx_amount_zscore",
+      "label": "Amount Z-Score vs 30D Mean",
+      "importance": 0.0471
+    },
+    {
+      "feature": "distance_from_home_km",
+      "label": "Distance from Home (km)",
+      "importance": 0.0367
+    },
+    {
+      "feature": "time_since_last_tx_sec",
+      "label": "Time Since Last Transaction (sec)",
+      "importance": 0.0366
+    },
+    {
+      "feature": "tx_amount_sum_24h",
+      "label": "24-Hour Cumulative Spend ($)",
+      "importance": 0.0356
+    },
+    {
+      "feature": "tx_velocity_24h",
+      "label": "24-Hour Velocity Count",
+      "importance": 0.0324
+    },
+    {
+      "feature": "amount",
+      "label": "Transaction Amount ($)",
+      "importance": 0.0321
+    }
+  ],
+  "feature_labels": {
+    "amount": "Transaction Amount ($)",
+    "tx_amount_zscore": "Amount Z-Score vs 30D Mean",
+    "tx_velocity_1h": "1-Hour Velocity Count",
+    "tx_velocity_24h": "24-Hour Velocity Count",
+    "tx_amount_sum_24h": "24-Hour Cumulative Spend ($)",
+    "is_new_device": "Unrecognized Device Fingerprint",
+    "is_cross_border": "Cross-Border Transaction",
+    "time_since_last_tx_sec": "Time Since Last Transaction (sec)",
+    "distance_from_home_km": "Distance from Home (km)",
+    "mcc_risk_tier": "Merchant Risk Tier (1-5)",
+    "ip_reputation_score": "IP Anonymity / Risk Score (0-100)",
+    "failed_otp_attempts_24h": "Failed OTP Attempts (24h)"
+  },
+  "leakage_report": {
+    "passed": true,
+    "checks": [
+      {
+        "name": "target_in_features",
+        "status": "PASSED",
+        "detail": "Target column is not in feature names."
+      },
+      {
+        "name": "duplicate_columns",
+        "status": "PASSED",
+        "detail": "No duplicate column names or identical feature values."
+      },
+      {
+        "name": "id_like_columns",
+        "status": "PASSED",
+        "detail": "No ID-like columns detected in features."
+      },
+      {
+        "name": "split_overlaps",
+        "status": "PASSED",
+        "detail": "Zero index or row content overlap between splits."
+      },
+      {
+        "name": "future_features",
+        "status": "PASSED",
+        "detail": "No future-information features detected."
+      },
+      {
+        "name": "target_correlation",
+        "status": "PASSED",
+        "detail": "All feature correlations with target are below 0.95."
+      },
+      {
+        "name": "preprocessor_isolation",
+        "status": "PASSED",
+        "detail": "Preprocessor state is properly isolated to training set."
+      }
+    ],
+    "warnings": [],
+    "errors": []
+  }
+}

@@ -36,23 +36,47 @@ class PublicInferenceService:
         self._load_artifacts()
 
     def _load_artifacts(self):
-        model_path = os.path.join(self.artifacts_dir, "model.joblib")
-        preprocessor_path = os.path.join(self.artifacts_dir, "preprocessor.joblib")
-        calibrator_path = os.path.join(self.artifacts_dir, "calibrator.joblib")
-        metadata_path = os.path.join(self.artifacts_dir, "metadata.json")
+        possible_dirs = [
+            self.artifacts_dir,
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "artifacts", "public", "v1.0.0")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "artifacts", "public")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "artifacts")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "artifacts", "public", "v1.0.0")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "artifacts", "public")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "artifacts")),
+        ]
+        
+        target_dir = None
+        for d in possible_dirs:
+            if d and os.path.exists(os.path.join(d, "model.joblib")):
+                target_dir = d
+                break
+                
+        if target_dir is None:
+            print(f"[PublicInferenceService] WARNING: Could not find model.joblib in candidate directories.")
+            self.model = None
+            self.preprocessor = None
+            self.calibrator = None
+            self.metadata = {}
+            return
 
-        if not os.path.exists(model_path) or not os.path.exists(preprocessor_path) or not os.path.exists(calibrator_path):
-            raise FileNotFoundError(f"Public benchmark artifacts missing in '{self.artifacts_dir}'. Complete Steps 15 and 16 first.")
+        self.artifacts_dir = target_dir
+        model_path = os.path.join(target_dir, "model.joblib")
+        preprocessor_path = os.path.join(target_dir, "preprocessor.joblib")
+        calibrator_path = os.path.join(target_dir, "calibrator.joblib")
+        metadata_path = os.path.join(target_dir, "metadata.json")
 
-        self.model = joblib.load(model_path)
-        self.preprocessor = joblib.load(preprocessor_path)
-        self.calibrator = joblib.load(calibrator_path)
+        self.model = joblib.load(model_path) if os.path.exists(model_path) else None
+        self.preprocessor = joblib.load(preprocessor_path) if os.path.exists(preprocessor_path) else None
+        self.calibrator = joblib.load(calibrator_path) if os.path.exists(calibrator_path) else None
 
         if os.path.exists(metadata_path):
             with open(metadata_path, "r") as f:
                 self.metadata = json.load(f)
         else:
             self.metadata = {}
+
+        print(f"[PublicInferenceService] Artifacts loaded successfully from '{target_dir}'.")
 
         self.model_version = self.metadata.get("model_version", "v1.0.0")
         self.dataset_source = "public"

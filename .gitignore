@@ -1,32 +1,40 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
+# Vercel CLI Local Metadata
+.vercel/
 
-# Virtual environment
+# Python
 backend_venv/
 venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.py[cod]
+
+# Environment & Secrets
 .env
 .env.*
+!.env.example
 
 # Database
-*.db
+backend/payguard.db
 *.sqlite
 *.sqlite3
 
-# Test/evaluation artifacts
+# Test/Evaluation artifacts
 **/raw_test_probs.npy
 **/raw_val_probs.npy
 **/y_test.npy
 **/y_val.npy
 
-# Node
+# Node & Build Outputs
 node_modules/
 frontend/dist/
 
-# OS
+# IDE & OS
+.vscode/
+.idea/
 .DS_Store
 Thumbs.db
 
-# Large dataset
+# Large raw dataset
 backend/data/public_fraud_dataset.csv/

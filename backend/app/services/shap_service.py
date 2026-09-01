@@ -24,9 +24,10 @@ FEATURE_LABELS = {
 class ShapService:
     def __init__(self):
         self.explainer = None
-        self.load_explainer()
 
     def load_explainer(self):
+        if self.explainer is not None:
+            return
         shap_path = os.path.join(ARTIFACTS_DIR, "shap_explainer.joblib")
         if os.path.exists(shap_path):
             self.explainer = joblib.load(shap_path)

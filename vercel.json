@@ -4,12 +4,8 @@
   "outputDirectory": "frontend/dist",
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/index.py"
-    },
-    {
       "source": "/health",
-      "destination": "/api/index.py"
+      "destination": "/api/health.py"
     },
     {
       "source": "/docs",
@@ -18,6 +14,30 @@
     {
       "source": "/openapi.json",
       "destination": "/api/index.py"
+    },
+    {
+      "source": "/api/public/(.*)",
+      "destination": "/api/public_predict.py"
+    },
+    {
+      "source": "/api/v1/risk/(.*)",
+      "destination": "/api/risk.py"
+    },
+    {
+      "source": "/api/v1/analyst/(.*)",
+      "destination": "/api/analyst.py"
+    },
+    {
+      "source": "/api/v1/policies/(.*)",
+      "destination": "/api/policies.py"
+    },
+    {
+      "source": "/api/v1/metrics/(.*)",
+      "destination": "/api/metrics.py"
+    },
+    {
+      "source": "/api/v1/audit/(.*)",
+      "destination": "/api/audit.py"
     },
     {
       "source": "/(.*)",

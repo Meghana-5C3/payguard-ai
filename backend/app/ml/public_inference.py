@@ -5,7 +5,6 @@ import joblib
 from typing import Dict, Any, List, Optional
 import numpy as np
 import pandas as pd
-import shap
 
 # Ensure project root is in sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..")))
@@ -67,6 +66,7 @@ class PublicInferenceService:
     @property
     def shap_explainer(self):
         if self._shap_explainer is None:
+            import shap
             self._shap_explainer = shap.TreeExplainer(self.model)
         return self._shap_explainer
 

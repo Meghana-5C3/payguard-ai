@@ -3,14 +3,14 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
-from backend.app.api import public_predict
+from backend.app.api import policies
 
-app = FastAPI(title="PayGuard AI Public Prediction Service")
+app = FastAPI(title="PayGuard AI Policy Engine Service")
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,4 +20,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(public_predict.router)
+app.include_router(policies.router)

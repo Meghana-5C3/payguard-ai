@@ -5,39 +5,39 @@
   "rewrites": [
     {
       "source": "/health",
-      "destination": "/api/health.py"
+      "destination": "/api/health/index.py"
     },
     {
       "source": "/docs",
-      "destination": "/api/index.py"
+      "destination": "/api/docs/index.py"
     },
     {
       "source": "/openapi.json",
-      "destination": "/api/index.py"
+      "destination": "/api/docs/index.py"
     },
     {
       "source": "/api/public/(.*)",
-      "destination": "/api/public_predict.py"
+      "destination": "/api/public_predict/index.py"
     },
     {
       "source": "/api/v1/risk/(.*)",
-      "destination": "/api/risk.py"
+      "destination": "/api/risk/index.py"
     },
     {
       "source": "/api/v1/analyst/(.*)",
-      "destination": "/api/analyst.py"
+      "destination": "/api/analyst/index.py"
     },
     {
       "source": "/api/v1/policies/(.*)",
-      "destination": "/api/policies.py"
+      "destination": "/api/policies/index.py"
     },
     {
       "source": "/api/v1/metrics/(.*)",
-      "destination": "/api/metrics.py"
+      "destination": "/api/metrics/index.py"
     },
     {
       "source": "/api/v1/audit/(.*)",
-      "destination": "/api/audit.py"
+      "destination": "/api/audit/index.py"
     },
     {
       "source": "/(.*)",

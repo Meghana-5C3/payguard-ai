@@ -39,8 +39,15 @@ class ShapService:
         if self.explainer is None:
             self.load_explainer()
 
-        shap_values = self.explainer(X_df)
-        values = shap_values.values[0] # 1D numpy array of SHAP attributions
+        if self.explainer is not None:
+            shap_values = self.explainer(X_df)
+            values = shap_values.values[0] # 1D numpy array of SHAP attributions
+        else:
+            from backend.app.services.inference_service import inference_service
+            import xgboost as xgb
+            dmat = xgb.DMatrix(X_df)
+            contribs = inference_service.model.get_booster().predict(dmat, pred_contribs=True)[0]
+            values = contribs[:-1]
 
         attributions = []
         for feature_name, raw_shap_val in zip(X_df.columns, values):

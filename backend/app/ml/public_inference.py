@@ -109,13 +109,10 @@ class PublicInferenceService:
 
         # Step 5: Optional SHAP local explanations
         if include_explanations:
-            shap_vals = self.shap_explainer.shap_values(X_scaled)
-            if isinstance(shap_vals, list):
-                row_shap = shap_vals[1][0]
-            elif len(shap_vals.shape) == 3:
-                row_shap = shap_vals[0, :, 1]
-            else:
-                row_shap = shap_vals[0]
+            import xgboost as xgb
+            dmat = xgb.DMatrix(X_scaled)
+            contribs = self.model.get_booster().predict(dmat, pred_contribs=True)[0]
+            row_shap = contribs[:-1]
 
             pos_features = []
             neg_features = []

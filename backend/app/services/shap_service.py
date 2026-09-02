@@ -28,12 +28,24 @@ class ShapService:
     def load_explainer(self):
         if self.explainer is not None:
             return
-        shap_path = os.path.join(ARTIFACTS_DIR, "shap_explainer.joblib")
-        if os.path.exists(shap_path):
-            self.explainer = joblib.load(shap_path)
-            print("[ShapService] SHAP TreeExplainer loaded successfully.")
+        possible_dirs = [
+            ARTIFACTS_DIR,
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "artifacts")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "app", "ml", "artifacts")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "backend", "app", "ml", "artifacts")),
+            "/var/task/backend/app/ml/artifacts",
+        ]
+        target_dir = None
+        for d in possible_dirs:
+            if d and os.path.exists(os.path.join(d, "shap_explainer.joblib")):
+                target_dir = d
+                break
+
+        if target_dir is not None:
+            self.explainer = joblib.load(os.path.join(target_dir, "shap_explainer.joblib"))
+            print(f"[ShapService] SHAP TreeExplainer loaded successfully from '{target_dir}'.")
         else:
-            print("[ShapService] WARNING: SHAP explainer artifact not found!")
+            print("[ShapService] Note: Using XGBoost native TreeSHAP fallback.")
 
     def explain(self, X_df: pd.DataFrame) -> Dict[str, Any]:
         if self.explainer is None:

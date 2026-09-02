@@ -25,21 +25,37 @@ class InferenceService:
     def __init__(self):
         self.model = None
         self.calibrator = None
+        self.artifacts_dir = None
         self.load_artifacts()
 
     def load_artifacts(self):
-        model_path = os.path.join(ARTIFACTS_DIR, "model.joblib")
-        calib_path = os.path.join(ARTIFACTS_DIR, "calibrator.joblib")
-        if os.path.exists(model_path) and os.path.exists(calib_path):
-            self.model = joblib.load(model_path)
-            self.calibrator = joblib.load(calib_path)
-            print("[InferenceService] Model and Calibrator loaded successfully.")
+        possible_dirs = [
+            ARTIFACTS_DIR,
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "artifacts")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "app", "ml", "artifacts")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "backend", "app", "ml", "artifacts")),
+            "/var/task/backend/app/ml/artifacts",
+        ]
+        target_dir = None
+        for d in possible_dirs:
+            if d and os.path.exists(os.path.join(d, "model.joblib")) and os.path.exists(os.path.join(d, "calibrator.joblib")):
+                target_dir = d
+                break
+
+        if target_dir is not None:
+            self.artifacts_dir = target_dir
+            self.model = joblib.load(os.path.join(target_dir, "model.joblib"))
+            self.calibrator = joblib.load(os.path.join(target_dir, "calibrator.joblib"))
+            print(f"[InferenceService] Model and Calibrator loaded successfully from '{target_dir}'.")
         else:
-            print("[InferenceService] WARNING: Model artifacts not found! Run train.py first.")
+            print(f"[InferenceService] WARNING: Model artifacts not found in candidate paths: {possible_dirs}")
 
     def predict(self, feature_vector: FeatureVector):
         if self.model is None or self.calibrator is None:
             self.load_artifacts()
+
+        if self.model is None or self.calibrator is None:
+            raise RuntimeError("[InferenceService] Cannot execute predict(): Model or Calibrator artifact is missing.")
 
         row = {
             "amount": feature_vector.amount,

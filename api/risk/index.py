@@ -28,8 +28,8 @@ app.include_router(risk.router)
 @app.post("/evaluate")
 @app.post("/")
 def evaluate_fallback(payload: TransactionCreateSchema, db: Session = Depends(get_db)):
-    return risk.evaluate_transaction_risk(payload, db)
+    return risk.evaluate_transaction(payload, db)
 
 @app.post("/verify")
 def verify_fallback(payload: VerifyChallengeSchema, db: Session = Depends(get_db)):
-    return risk.verify_step_up_challenge(payload, db)
+    return risk.verify_challenge(payload, db)

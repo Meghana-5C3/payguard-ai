@@ -38,3 +38,6 @@ Thumbs.db
 
 # Large raw dataset
 backend/data/public_fraud_dataset.csv/
+
+.vercel
+.env*

@@ -1,7 +1,8 @@
 import sys
 from pathlib import Path
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -9,6 +10,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from backend.app.api import audit
+from backend.app.database import get_db
 
 app = FastAPI(title="PayGuard AI Audit Service")
 
@@ -21,3 +23,8 @@ app.add_middleware(
 )
 
 app.include_router(audit.router)
+
+@app.get("/logs")
+@app.get("/")
+def logs_fallback(db: Session = Depends(get_db)):
+    return audit.get_audit_logs(db)

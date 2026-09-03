@@ -42,10 +42,14 @@ class ShapService:
                 break
 
         if target_dir is not None:
-            self.explainer = joblib.load(os.path.join(target_dir, "shap_explainer.joblib"))
-            print(f"[ShapService] SHAP TreeExplainer loaded successfully from '{target_dir}'.")
+            try:
+                self.explainer = joblib.load(os.path.join(target_dir, "shap_explainer.joblib"))
+                print(f"[ShapService] SHAP TreeExplainer loaded successfully from '{target_dir}'.")
+            except Exception as e:
+                print(f"[ShapService] Note: Using XGBoost native TreeSHAP calculation ({e}).")
+                self.explainer = None
         else:
-            print("[ShapService] Note: Using XGBoost native TreeSHAP fallback.")
+            print("[ShapService] Note: Using XGBoost native TreeSHAP calculation.")
 
     def explain(self, X_df: pd.DataFrame) -> Dict[str, Any]:
         if self.explainer is None:

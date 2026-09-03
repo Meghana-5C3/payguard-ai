@@ -39,21 +39,21 @@ class PublicInferenceService:
         possible_dirs = [
             self.artifacts_dir,
             os.path.abspath(os.path.join(os.path.dirname(__file__), "artifacts", "public", "v1.0.0")),
-            os.path.abspath(os.path.join(os.path.dirname(__file__), "artifacts", "public")),
-            os.path.abspath(os.path.join(os.path.dirname(__file__), "artifacts")),
             os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "artifacts", "public", "v1.0.0")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "backend", "app", "ml", "artifacts", "public", "v1.0.0")),
+            "/var/task/backend/app/ml/artifacts/public/v1.0.0",
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "artifacts", "public")),
             os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "artifacts", "public")),
-            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "artifacts")),
         ]
         
         target_dir = None
         for d in possible_dirs:
-            if d and os.path.exists(os.path.join(d, "model.joblib")):
+            if d and os.path.exists(os.path.join(d, "model.joblib")) and os.path.exists(os.path.join(d, "preprocessor.joblib")):
                 target_dir = d
                 break
                 
         if target_dir is None:
-            print(f"[PublicInferenceService] WARNING: Could not find model.joblib in candidate directories.")
+            print(f"[PublicInferenceService] WARNING: Could not find public benchmark artifacts in candidate directories.")
             self.model = None
             self.preprocessor = None
             self.calibrator = None
@@ -87,17 +87,15 @@ class PublicInferenceService:
         self.feature_columns = PUBLIC_FEATURE_NAMES
         self._shap_explainer = None
 
-    @property
-    def shap_explainer(self):
-        if self._shap_explainer is None:
-            import shap
-            self._shap_explainer = shap.TreeExplainer(self.model)
-        return self._shap_explainer
-
     def predict(self, input_data: Dict[str, Any], include_explanations: bool = False) -> Dict[str, Any]:
         """
         Executes inference for a single public transaction feature input.
         """
+        if self.model is None or self.preprocessor is None or self.calibrator is None:
+            self._load_artifacts()
+            if self.model is None or self.preprocessor is None or self.calibrator is None:
+                raise RuntimeError("Public benchmark model artifacts are not loaded.")
+
         # Validate missing features
         missing_features = [col for col in PUBLIC_FEATURE_NAMES if col not in input_data]
         if missing_features:
@@ -131,7 +129,7 @@ class PublicInferenceService:
             "decision": decision
         }
 
-        # Step 5: Optional SHAP local explanations
+        # Step 5: Optional SHAP local explanations using native XGBoost TreeSHAP
         if include_explanations:
             import xgboost as xgb
             dmat = xgb.DMatrix(X_scaled)

@@ -21,7 +21,15 @@
       "destination": "/api/public_predict/index.py"
     },
     {
+      "source": "/api/public",
+      "destination": "/api/public_predict/index.py"
+    },
+    {
       "source": "/api/v1/risk/(.*)",
+      "destination": "/api/risk/index.py"
+    },
+    {
+      "source": "/api/v1/risk",
       "destination": "/api/risk/index.py"
     },
     {
@@ -29,7 +37,15 @@
       "destination": "/api/analyst/index.py"
     },
     {
+      "source": "/api/v1/analyst",
+      "destination": "/api/analyst/index.py"
+    },
+    {
       "source": "/api/v1/policies/(.*)",
+      "destination": "/api/policies/index.py"
+    },
+    {
+      "source": "/api/v1/policies",
       "destination": "/api/policies/index.py"
     },
     {
@@ -37,7 +53,15 @@
       "destination": "/api/metrics/index.py"
     },
     {
+      "source": "/api/v1/metrics",
+      "destination": "/api/metrics/index.py"
+    },
+    {
       "source": "/api/v1/audit/(.*)",
+      "destination": "/api/audit/index.py"
+    },
+    {
+      "source": "/api/v1/audit",
       "destination": "/api/audit/index.py"
     },
     {

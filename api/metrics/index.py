@@ -25,4 +25,4 @@ app.include_router(metrics.router)
 @app.get("/performance")
 @app.get("/")
 def performance_fallback():
-    return metrics.get_performance_metrics()
+    return metrics.get_model_metrics()

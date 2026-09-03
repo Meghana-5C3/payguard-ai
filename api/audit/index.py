@@ -1,6 +1,7 @@
 import sys
+from typing import Optional
 from pathlib import Path
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Query
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
@@ -26,5 +27,9 @@ app.include_router(audit.router)
 
 @app.get("/logs")
 @app.get("/")
-def logs_fallback(db: Session = Depends(get_db)):
-    return audit.get_audit_logs(db)
+def logs_fallback(
+    evaluation_id: Optional[str] = None,
+    limit: int = 50,
+    db: Session = Depends(get_db)
+):
+    return audit.get_audit_logs(evaluation_id=evaluation_id, limit=limit, db=db)

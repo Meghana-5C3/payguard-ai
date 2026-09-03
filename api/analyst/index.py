@@ -1,6 +1,7 @@
 import sys
+from typing import Optional
 from pathlib import Path
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Query
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
@@ -27,9 +28,13 @@ app.include_router(analyst.router)
 
 @app.get("/queue")
 @app.get("/")
-def queue_fallback(status_filter: str = "ALL", db: Session = Depends(get_db)):
-    return analyst.get_analyst_queue(status_filter, db)
+def queue_fallback(
+    status_filter: Optional[str] = Query("ALL"),
+    limit: int = 50,
+    db: Session = Depends(get_db)
+):
+    return analyst.get_analyst_queue(status_filter=status_filter, limit=limit, db=db)
 
 @app.post("/override")
 def override_fallback(payload: AnalystOverrideSchema, db: Session = Depends(get_db)):
-    return analyst.submit_analyst_override(payload, db)
+    return analyst.analyst_override(payload=payload, db=db)

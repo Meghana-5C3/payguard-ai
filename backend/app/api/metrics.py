@@ -9,11 +9,23 @@ ARTIFACTS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "m
 
 @router.get("/performance", response_model=ModelMetricsResponseSchema)
 def get_model_metrics():
-    metrics_file = os.path.join(ARTIFACTS_DIR, "metrics.json")
-    if not os.path.exists(metrics_file):
-        raise HTTPException(status_code=404, detail="Model metrics file not found. Train the ML model first.")
+    possible_paths = [
+        os.path.join(ARTIFACTS_DIR, "metrics.json"),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "artifacts", "metrics.json")),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "backend", "app", "ml", "artifacts", "metrics.json")),
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ml", "artifacts", "model_metrics.json")),
+        "/var/task/backend/app/ml/artifacts/metrics.json",
+    ]
+    target_path = None
+    for p in possible_paths:
+        if p and os.path.exists(p):
+            target_path = p
+            break
 
-    with open(metrics_file, "r") as f:
+    if not target_path:
+        raise HTTPException(status_code=404, detail="Model metrics file not found.")
+
+    with open(target_path, "r") as f:
         metrics_data = json.load(f)
 
     return metrics_data
